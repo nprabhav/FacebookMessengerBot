@@ -3,7 +3,7 @@ from pymessenger import Bot
 
 app = Flask("My echo bot")
 
-fb_token = "EAAEWc3Uylh0BADtOoZCKan98hEVZBY9H7Lbr9wpZBXkuFtX8siwcCiGN5q7tf0bVpUxDZB7Q6QComD0ZCsZBbpjQmqZCkAYKbuBSbTW63KPViXunnVfi9NZAuF1cgR3mgFZCi3pKmAeooLWFOlMZB3ZAGlEDiDmj3QjoTrPDcHtIdZBqZCAZDZD"
+fb_token = "EAAKHYGtwONoBAPQvTmPtZBXWKis8YGMz96XbDuNZCrMN6vkGhFEPVZCeKGIZBwXlLKv4jHHXAAErMG5kZB299bqBlD4j23OYzpIBqriowCgg6Qs45obLmZAAqtAKcOhBJAynqr5JSzg0itvItrZCPAkyaQr2SukQU3PtVmZBpAyJ4QZDZD"
 bot = Bot(fb_token)
 
 v_token = "hello"
