@@ -1,10 +1,9 @@
 from flask import Flask, request
 from pymessenger import Bot
-from utils import wit_response
 
 app = Flask("My echo bot")
 
-fb_token = "EAAEWc3Uylh0BADtOoZCKan98hEVZBY9H7Lbr9wpZBXkuFtX8siwcCiGN5q7tf0bVpUxDZB7Q6QComD0ZCsZBbpjQmqZCkAYKbuBSbTW63KPViXunnVfi9NZAuF1cgR3mgFZCi3pKmAeooLWFOlMZB3ZAGlEDiDmj3QjoTrPDcHtIdZBqZCAZDZD"
+fb_token = "EAAKHYGtwONoBAPQvTmPtZBXWKis8YGMz96XbDuNZCrMN6vkGhFEPVZCeKGIZBwXlLKv4jHHXAAErMG5kZB299bqBlD4j23OYzpIBqriowCgg6Qs45obLmZAAqtAKcOhBJAynqr5JSzg0itvItrZCPAkyaQr2SukQU3PtVmZBpAyJ4QZDZD"
 bot = Bot(fb_token)
 
 v_token = "hello"
@@ -41,20 +40,9 @@ def webhook():
 						# text msg
 						query = messaging_event['message']['text']
 						#echo
-						response = None
-						entity,value = wit_response(query)
-
-						if entity == "newstype":
-							response = "Okay, I will send you {} news".format(str(value))
-						elif entity == "location":
-							response = "Okay, so you live in {0}. I will send you top headlines from {0}".format(str(value))
-
-						if response == None:
-							response = "Sorry, I didn't understand!"
-
-						bot.send_text_message(sender_id, response)
+						bot.send_text_message(sender_id, query)
 	return "ok", 200
 
 
 if __name__ == "__main__":
-	app.run(port=8010, use_reloader = True)
+	app.run(port=8000, use_reloader = True)
