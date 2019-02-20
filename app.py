@@ -1,6 +1,6 @@
 from flask import Flask, request
 from pymessenger import Bot
-from utils import wit_response
+from utils import wit_response,get_news_elements
 
 app = Flask("My echo bot")
 
@@ -21,7 +21,7 @@ def verify():
 
 @app.route('/', methods=['POST'])
 def webhook():
-	print(request.data)
+	print(request.data),
 	data = request.get_json()
 
 	if data['object'] == "page":
@@ -40,19 +40,37 @@ def webhook():
 					if messaging_event['message'].get('text'):
 						# text msg
 						query = messaging_event['message']['text']
-						#echo
-						response = None
-						entity,value = wit_response(query)
 
-						if entity == "newstype":
-							response = "Okay, I will send you {} news".format(str(value))
-						elif entity == "location":
-							response = "Okay, so you live in {0}. I will send you top headlines from {0}".format(str(value))
+						categories = wit_response(query)
+						#print(categories)
+						elements = get_news_elements(categories)
+						#print(elements)
 
-						if response == None:
-							response = "Sorry, I didn't understand!"
 
-						bot.send_text_message(sender_id, response)
+						# print(query)
+						# response = None
+						# entity,value = wit_response(query)
+						#
+						# if entity == "newstype":
+						# 	response = "Okay, I will send you {} news".format(str(value))
+						# elif entity == "location":
+						# 	response = "Okay, so you live in {0}. I will send you top headlines from {0}".format(str(value))
+						#
+						# if response == None:
+						# 	response = "Sorry, I didn't understand!"
+						# bot.send_text_message(sender_id,"Hi")
+						if(elements):
+							print("------------------------------------------------------")
+							print(elements)
+							print("------------------------------------------------------")
+						try:
+							bot.send_text_message(sender_id,elements[0]['title'])
+						# 	#print(bot.send_generic_message(sender_id, elements))
+						except:
+						# 	#print(bot.send_text_message(sender_id,"Not found"))
+							bot.send_text_message(sender_id,"Not found")
+
+						# bot.send_generic_message(recipient_id, elements)
 	return "ok", 200
 
 
