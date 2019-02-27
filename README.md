@@ -39,6 +39,7 @@ $ python3 app.py
 
 
  ## Tools and Technologies Used
+ ```
  aiml==0.8.6
  apiai==1.2.3
  certifi==2017.7.27.1
@@ -60,7 +61,7 @@ $ python3 app.py
  bs4==0.0.1
  html5lib==0.999999999
  requests==2.18.4
-
+```
 
  ## Description
  Facebook Messenger Chat Bot
@@ -68,8 +69,8 @@ $ python3 app.py
 
  ## Convenient screenshot
 
- ![Output](images/1.png)
- ![Output](images/2.png)
+ ![images](images/1.png)
+ ![images](images/2.png)
 
 
 
