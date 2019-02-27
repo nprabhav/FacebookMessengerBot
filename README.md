@@ -1,4 +1,6 @@
 # Facebook Messenger Bot
+Deployed here :(https://fbnewsbot.herokuapp.com/)
+You can chat with the AI page where the chatbot is deployed.(http://facebook.com/spirawiz)
 
  ## Usage
 
