@@ -12,19 +12,19 @@
 
 To use, it is recommended to make `virtualenv` and then install all required packages:
 
-* Installing virtualenv:  
+* Installing virtualenv:
 ```
 $ sudo pip install virtualenv
-```  
-* Making virtualenv:  
+```
+* Making virtualenv:
 ```
 $ virtualenv venv
-```  
-* Go to your dir and activate it:   
+```
+* Go to your dir and activate it:
 ```
 $ . venv/bin/activate
-```  
-* To install all required packages:  
+```
+* To install all required packages:
  ```
  $ pip install -r requirements.txt
  or
@@ -33,7 +33,7 @@ $ . venv/bin/activate
 * Run the application:
 ```
 $ python3 app.py
-```    
+```
 
 
  ## Tools and Technologies Used
@@ -66,7 +66,7 @@ $ python3 app.py
 
 
  ## Convenient screenshot
-
+<img src="https://github.com/nprabhav/FacebookMessengerBot/blob/master/images/1.jpg" width="48">
  ![images](images/1.jpg)
  ![images](images/2.jpg)
 
