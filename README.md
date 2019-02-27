@@ -1,6 +1,4 @@
-# FacebookMessengerBot
- Deployed here :(http://nprabhav.pythonanywhere.com/)
-
+# Facebook Messenger Bot
 
  ## Usage
 
@@ -85,5 +83,5 @@ $ python3 app.py
 
 
  ## License
- The MIT License (MIT) 2018 - [Prabhav Nalhe](https://github.com/nprabhav).
+ The MIT License (MIT) 2019 - [Prabhav Nalhe](https://github.com/nprabhav).
  Please have a look at the [LICENSE](LICENSE) for more details.
