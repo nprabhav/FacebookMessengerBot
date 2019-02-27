@@ -1,19 +1,21 @@
 from flask import Flask, request
 from pymessenger import Bot
-from utils import wit_response,get_news_elements
+from utils import fetch_reply, news_categories, HELP_MSG
+import requests,json
+import os
 
-app = Flask("My echo bot")
+app = Flask("My news bot")
+FB_ACCESS_TOKEN = "EAAKHYGtwONoBAPQvTmPtZBXWKis8YGMz96XbDuNZCrMN6vkGhFEPVZCeKGIZBwXlLKv4jHHXAAErMG5kZB299bqBlD4j23OYzpIBqriowCgg6Qs45obLmZAAqtAKcOhBJAynqr5JSzg0itvItrZCPAkyaQr2SukQU3PtVmZBpAyJ4QZDZD"
 
-fb_token = "EAAEWc3Uylh0BADtOoZCKan98hEVZBY9H7Lbr9wpZBXkuFtX8siwcCiGN5q7tf0bVpUxDZB7Q6QComD0ZCsZBbpjQmqZCkAYKbuBSbTW63KPViXunnVfi9NZAuF1cgR3mgFZCi3pKmAeooLWFOlMZB3ZAGlEDiDmj3QjoTrPDcHtIdZBqZCAZDZD"
-bot = Bot(fb_token)
-
-v_token = "hello"
+#FB_ACCESS_TOKEN = os.environ.get('FB_ACCESS_TOKEN')
+bot = Bot(FB_ACCESS_TOKEN)
 
 
 @app.route('/', methods=['GET'])
 def verify():
 	if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
-		if not request.args.get("hub.verify_token") == v_token:
+		# if not request.args.get("hub.verify_token") == os.environ.get('VERIFICATION_TOKEN'):
+		if not request.args.get("hub.verify_token") == 'hello':
 			return "Verification token mismatch", 403
 		return request.args["hub.challenge"], 200
 	return "Hello world", 200
@@ -21,7 +23,7 @@ def verify():
 
 @app.route('/', methods=['POST'])
 def webhook():
-	print(request.data),
+	print(request.data)
 	data = request.get_json()
 
 	if data['object'] == "page":
@@ -36,43 +38,88 @@ def webhook():
 				recipient_id = messaging_event['recipient']['id']
 
 				if messaging_event.get('message'):
-					# normal messages
+					# HANDLE NORMAL MESSAGES HERE
+
 					if messaging_event['message'].get('text'):
-						# text msg
+						# HANDLE TEXT MESSAGES
+
 						query = messaging_event['message']['text']
 
-						categories = wit_response(query)
-						#print(categories)
-						elements = get_news_elements(categories)
-						#print(elements)
+						if messaging_event['message'].get('quick_reply'):
+							# HANDLE TEXT MESSAGE WITH QUICK REPLY
+							payload = messaging_event['message']['quick_reply']['payload']
+							if payload in list(zip(*news_categories))[1]:
+								query = payload
+
+						reply = fetch_reply(query, sender_id)
+						with open('data.json', 'w') as outfile:
+							json.dump(reply, outfile)
+						# print("---------------------------------------------------------------------------------------------------------")
+						# print(reply)
+						# print("---------------------------------------------------------------------------------------------------------")
+						print(reply['type'])
+						if reply['type'] == 'news':
+							bot.send_generic_message(sender_id, reply['data'])
+
+						elif reply['type'] == 'none':
+							bot.send_button_message(sender_id, "Sorry, I didn't understand. :(", reply['data'])
+						elif reply['type'] == 'help':
+							bot.send_quickreply(sender_id, HELP_MSG, news_categories)
+						else:
+							bot.send_text_message(sender_id, reply['data'])
 
 
-						# print(query)
-						# response = None
-						# entity,value = wit_response(query)
-						#
-						# if entity == "newstype":
-						# 	response = "Okay, I will send you {} news".format(str(value))
-						# elif entity == "location":
-						# 	response = "Okay, so you live in {0}. I will send you top headlines from {0}".format(str(value))
-						#
-						# if response == None:
-						# 	response = "Sorry, I didn't understand!"
-						# bot.send_text_message(sender_id,"Hi")
-						if(elements):
-							print("------------------------------------------------------")
-							print(elements)
-							print("------------------------------------------------------")
-						try:
-							bot.send_text_message(sender_id,elements[0]['title'])
-						# 	#print(bot.send_generic_message(sender_id, elements))
-						except:
-						# 	#print(bot.send_text_message(sender_id,"Not found"))
-							bot.send_text_message(sender_id,"Not found")
+				elif messaging_event.get('postback'):
+					# HANDLE POSTBACKS HERE
+					payload = messaging_event['postback']['payload']
+					if payload ==  'SHOW_HELP':
+						bot.send_quickreply(sender_id, HELP_MSG, news_categories)
 
-						# bot.send_generic_message(recipient_id, elements)
+
 	return "ok", 200
 
 
+def set_greeting_text():
+	headers = {
+		'Content-Type':'application/json'
+		}
+	data = {
+		"setting_type":"greeting",
+		"greeting":{
+			"text":"Hi {{user_first_name}}! I am news bot"
+			}
+		}
+	ENDPOINT = "https://graph.facebook.com/v2.8/me/thread_settings?access_token=%s"%(FB_ACCESS_TOKEN)
+	r = requests.post(ENDPOINT, headers = headers, data = json.dumps(data))
+	print(r.content)
+
+
+def set_persistent_menu():
+	headers = {
+		'Content-Type':'application/json'
+		}
+	data = {
+		"setting_type":"call_to_actions",
+		"thread_state" : "existing_thread",
+		"call_to_actions":[
+			{
+				"type":"web_url",
+				"title":"Meet the developer",
+				"url":"https://fb.me/nprabhav"
+			},
+			{
+				"type":"postback",
+				"title":"Help",
+				"payload":"SHOW_HELP"
+			}]
+		}
+	ENDPOINT = "https://graph.facebook.com/v2.6/me/thread_settings?access_token=%s"%(FB_ACCESS_TOKEN)
+	r = requests.post(ENDPOINT, headers = headers, data = json.dumps(data))
+	print(r.content)
+
+set_greeting_text()
+set_persistent_menu()
+
+
 if __name__ == "__main__":
-	app.run(port=8010, use_reloader = True)
+	app.run(port=8000, use_reloader = True)
