@@ -66,9 +66,9 @@ $ python3 app.py
 
 
  ## Convenient screenshot
-<img src="https://github.com/nprabhav/FacebookMessengerBot/blob/master/images/1.jpg" width="48">
- ![images](images/1.jpg)
- ![images](images/2.jpg)
+<img src="https://github.com/nprabhav/FacebookMessengerBot/blob/master/images/1.jpg" width="150">
+<img src="https://github.com/nprabhav/FacebookMessengerBot/blob/master/images/2.jpg" width="150">
+
 
 
 
