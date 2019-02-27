@@ -83,9 +83,6 @@ $ python3 app.py
  * If no relevant issue exists, open a new issue and get it assigned to yourself on GitHub.
  Please proceed with a Pull Request only after you're assigned. It'd be a waste of your time as well as ours if you have not contacted us before hand when working on some feature / issue.
 
- ## People involved
- * [Prabhav Nalhe](https://github.com/nprabhav)
-
 
  ## License
  The MIT License (MIT) 2018 - [Prabhav Nalhe](https://github.com/nprabhav).
