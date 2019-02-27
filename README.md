@@ -1,5 +1,8 @@
 # Facebook Messenger Bot
+A smart chatbot which fetches news from all around the world on different topics like sports, political, business, technology, entertainment, etc.
+
 Deployed here :(https://fbnewsbot.herokuapp.com/)
+
 You can chat with the AI page where the chatbot is deployed.(http://facebook.com/spirawiz)
 
  ## Usage
