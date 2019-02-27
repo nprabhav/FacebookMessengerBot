@@ -67,6 +67,12 @@ $ python3 app.py
 
  ## Convenient screenshot
 <img src="https://github.com/nprabhav/FacebookMessengerBot/blob/master/images/1.jpg" width="350">
+
+
+
+
+
+
 <img src="https://github.com/nprabhav/FacebookMessengerBot/blob/master/images/2.jpg" width="350">
 
 
