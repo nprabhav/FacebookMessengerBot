@@ -1,6 +1,4 @@
 # FacebookMessengerBot
- Deployed here :(http://nprabhav.pythonanywhere.com/)
-
 
  ## Usage
 
