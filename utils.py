@@ -34,9 +34,6 @@ from gnewsclient import gnewsclient
 APIAI_ACCESS_TOKEN = "ecc6a68948ae4c4c8114a7e2d668c36c"
 ai = apiai.ApiAI(APIAI_ACCESS_TOKEN)
 
-# endpoint of the news API
-GNEWS_API_ENDPOINT = "https://gnewsapi.herokuapp.com"
-
 # available news categories
 news_categories = [('sports', 'sports news'), ('political', 'political news'), ('business', 'business news'),
 				   ('top stories', 'top stories news'), ('world', 'world news'), ('national', 'national news'),
