@@ -1,6 +1,8 @@
 # Facebook Messenger Bot
 [![forthebadge](http://forthebadge.com/images/badges/made-with-python.svg)](http://forthebadge.com)
 
+A smart chatbot which fetches news from all around the world on different topics like sports, political, business, technology, entertainment, etc.
+Deployed on: (https://fbnewsbot.herokuapp.com/)
  ## Usage
 
  ```sh
